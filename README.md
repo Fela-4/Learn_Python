@@ -17,3 +17,13 @@ How to do a pull:
 ```
 git pull
 ```
+
+---
+
+### Run
+
+Run the script
+
+```
+python main.py
+```
