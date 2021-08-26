@@ -12,7 +12,7 @@ print(f"\nDate: {date}")
 print("\nThe Temperature in Aizawl: ")
 temp_celcius = page_html_str[inx+ 427: inx+430]
 print(f"In Celcius : {temp_celcius}°C")
-temp_farenheit = (float(temp_celcius) * (9/5)) + 32
+temp_farenheit = round(((float(temp_celcius) * (9/5)) + 32), 2)
 print(f"In Farenheit : {temp_farenheit}°F")
 
 
