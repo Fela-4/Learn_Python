@@ -27,7 +27,7 @@ def is_win(user, computer)
 
 
 def play()
-    user= input("What is your choice: 'p' for paper, 'r' for rock and 's' for scissors\n")
+    user = input("What is your choice: 'p' for paper, 'r' for rock and 's' for scissors\n")
     comp = random.choice(['r','p','s']) 
 
     if user == computer:
