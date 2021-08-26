@@ -4,6 +4,8 @@ r = requests.get("https://www.worldweatheronline.com/aizawl-weather/mizoram/in.a
 
 page_html_str = r.text
 
-print(page_html_str[6606-50: 6606+50])
+inx = page_html_str.index("Aizawl Weather Now")
+temperature = page_html_str[inx+ 427: inx+430]
+print(f"The Temperature in Aizawl is : {temperature}°C")
 
 
