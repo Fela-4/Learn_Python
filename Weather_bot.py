@@ -2,7 +2,7 @@ import discord
 import requests
 from bs4 import BeautifulSoup as bs
 
-TOKEN = 'ODgxOTY5ODA1NjY4ODA2NjY2.YS0kYw.Lb2WaG5K4h7vy1IvxQ2Bt2nnfhI'
+TOKEN = 'ODgxOTY5ODA1NjY4ODA2NjY2.YS0kYw.sa5APszeCwSmR9BLj3BqLA911Gs'
 
 #Weather
 r = requests.get("https://www.worldweatheronline.com/aizawl-weather/mizoram/in.aspx")
