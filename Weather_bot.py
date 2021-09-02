@@ -49,5 +49,5 @@ async def on_message(message):
     if user_message.lower() == '!anywhere':
         await message.channel.send('This can be used anywhere!')
         return
-
+        
 client.run(TOKEN)
