@@ -1,8 +1,9 @@
 import discord
 import requests
+import os
 from bs4 import BeautifulSoup as bs
 
-TOKEN = 'ODgxOTY5ODA1NjY4ODA2NjY2.YS0kYw.sa5APszeCwSmR9BLj3BqLA911Gs'
+TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 #Weather
 r = requests.get("https://www.worldweatheronline.com/aizawl-weather/mizoram/in.aspx")
