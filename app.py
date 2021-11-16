@@ -1,54 +1,40 @@
-# Run this app with `python app.py` and
-# visit http://127.0.0.1:8050/ in your web browser.
-
 import dash
+import dash_bootstrap_components as dbc
 from dash import dcc as dcc
 from dash import html as html
+from dash.dependencies import Input , Output
+from dash_bootstrap_components._components.Col import Col
+
 import plotly.express as px
 import pandas as pd
 
-app = dash.Dash(__name__)
+df = pd.read_csv('test.csv')
 
-colors = {
-    'background': '#111111',
-    'text': '#7FDBFF'
-}
+app = dash.Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# assume you have a "long-form" data frame
-# see https://plotly.com/python/px-arguments/ for more options
-df = pd.DataFrame({
-    "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
-    "Amount": [4, 1, 2, 2, 4, 5],
-    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
-})
+app.layout = dbc.Container([
+                dbc.Row([
+                    dbc.Col(html.H1("Covid19 Cases Confirmed Global", className='text-center text-info'))
+                ]),
 
-fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+                dbc.Row([
+                    dbc.Col([
+                    dcc.Dropdown(id='Dpdwn', multi = False , value='Algeria',
+                                     options=[{'label' : x, 'value' : x }
+                                     for x in sorted (df['Country/Region'].unique())]),
+                    dcc.Graph(id='grph' , figure={})                  
+                ], width={'size' : 5}),
 
-fig.update_layout(
-    plot_bgcolor=colors['background'],
-    paper_bgcolor=colors['background'],
-    font_color=colors['text']
-)
-
-app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
-    html.H1(
-        children='Hello Dash',
-        style={
-            'textAlign': 'center',
-            'color': colors['text']
-        }
-    ),
-
-    html.Div(children='Dash: A web application framework for your data.', style={
-        'textAlign': 'center',
-        'color': colors['text']
-    }),
-
-    dcc.Graph(
-        id='example-graph-2',
-        figure=fig
-    )
+             ])
 ])
 
+# @app.callback(
+#      Output('grph','figure'),
+#      Input('Dpdwn','value')
+# )
+
+# def update_grph(Country_name): 
+#      dff = df[df['Country']==Country_name]
+#      figln = px.line(dff,  x='Date', y=)
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=3000)
