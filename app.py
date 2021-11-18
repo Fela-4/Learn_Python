@@ -8,7 +8,8 @@ from dash_bootstrap_components._components.Col import Col
 import plotly.express as px
 import pandas as pd
 
-df = pd.read_csv('test.csv')
+df = pd.read_excel('Covid-Cases-Per-month.xlsx')
+#dfd = df.iloc[:,4:]
 
 app = dash.Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -16,25 +17,41 @@ app.layout = dbc.Container([
                 dbc.Row([
                     dbc.Col(html.H1("Covid19 Cases Confirmed Global", className='text-center text-info'))
                 ]),
+                
 
                 dbc.Row([
                     dbc.Col([
-                    dcc.Dropdown(id='Dpdwn', multi = False , value='Algeria',
+                    dcc.Dropdown(id='Drpdwn', multi = False , value='Afghanistan',
                                      options=[{'label' : x, 'value' : x }
-                                     for x in sorted (df['Country/Region'].unique())]),
+                                     for x in sorted(df['Country/Region'].unique())]),
                     dcc.Graph(id='grph' , figure={})                  
-                ], width={'size' : 5}),
+                ], width={'size' : 5}), 
+                    dbc.Col([
+                        dcc.RadioItems(id='Province-radio',
+                                     options=[{'label' : k, 'value' : k}
+                                     for k in df['Province/State'].unique()],
+                                     value = ''
+
+                        )
+
+                    ])
+            
 
              ])
 ])
+print(df[:5])
+@app.callback(
+     Output('grph','figure'),
+     Input('Drpdwn','value'),
+     Input('Province-radio','value')
+)
 
-# @app.callback(
-#      Output('grph','figure'),
-#      Input('Dpdwn','value')
-# )
+def update_grph(Country_name,state_name): 
+     dff = df[df['Country/Region']==Country_name or df['Province/State']==state_name]
+     figln = px.line(dff,  x='Lat', y='Long')
+     return figln
 
-# def update_grph(Country_name): 
-#      dff = df[df['Country']==Country_name]
-#      figln = px.line(dff,  x='Date', y=)
+
+
 if __name__ == '__main__':
     app.run_server(debug=True, port=3000)
