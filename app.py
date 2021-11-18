@@ -80,8 +80,8 @@ app.layout = dbc.Container(
                             id="Dpdwn",
                             options=[{"label": v, "value": v} for v in place_list],
                             value=place_list[0],
-                        )
-                        # dcc.Graph(id="grph", figure={}),
+                        ),
+                        dcc.Graph(id="grph", figure={}),
                     ],
                     width={"size": 5},
                 ),
@@ -90,13 +90,23 @@ app.layout = dbc.Container(
     ]
 )
 
-# @app.callback(
-#      Output('grph','figure'),
-#      Input('Dpdwn','value')
-# )
 
-# def update_grph(Country_name):
-#      dff = df[df['Country']==Country_name]
-#      figln = px.line(dff,  x='Date', y=)
+@app.callback(Output("grph", "figure"), Input("Dpdwn", "value"))
+def update_grph(place):
+    print()
+    series = new_df.loc[place]
+    x = np.array(series.index)
+    y = np.array(series)
+
+    figure = {
+        "data": [
+            {"x": x, "y": y, "type": "bar", "name": "SF"},
+        ],
+        "layout": {"title": "Dash Data Visualization"},
+    }
+
+    return figure
+
+
 if __name__ == "__main__":
     app.run_server(debug=True, port=3000)
