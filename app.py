@@ -10,13 +10,24 @@ import plotly.express as px
 import pandas as pd
 from datetime import datetime
 
-from app_contents import new_df1,new_df2,new_df3,place_list,place_list2,place_list3,df,df2,df3
+from app_contents import (
+    new_df1,
+    new_df2,
+    new_df3,
+    place_list,
+    place_list2,
+    place_list3,
+    df,
+    df2,
+    df3,
+)
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = dbc.Container(
-    [   dbc.Row(
+    [
+        dbc.Row(
             [
                 dbc.Col(
                     html.H1(
@@ -26,7 +37,6 @@ app.layout = dbc.Container(
                 )
             ]
         ),
-
         dbc.Row(
             [
                 dbc.Col(
@@ -44,26 +54,32 @@ app.layout = dbc.Container(
                     [
                         dcc.Dropdown(
                             id="Dpdwn2",
-                            options=[{"label": x, "value":x} for x in place_list2],
+                            options=[{"label": x, "value": x} for x in place_list2],
                             value=place_list2[0],
                         ),
                         dcc.Graph(id="grph2", figure={}),
                     ],
                     width={"size": 5},
                 ),
-            ], justify="around"),
-
-        dbc.Row([
-            dbc.Col([
-                dcc.Dropdown(
-                        id="Dpdwn3",
-                        options=[{"label": x, "value":x} for x in place_list2],
-                        value=place_list2[0],
-                    ),
-                   dcc.Graph(id="grph3", figure={}),
-                ],width={"size": 5},
-            ),
-        ], justify='center')
+            ],
+            justify="around",
+        ),
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        dcc.Dropdown(
+                            id="Dpdwn3",
+                            options=[{"label": x, "value": x} for x in place_list2],
+                            value=place_list2[0],
+                        ),
+                        dcc.Graph(id="grph3", figure={}),
+                    ],
+                    width={"size": 5},
+                ),
+            ],
+            justify="center",
+        ),
     ]
 )
 
@@ -84,6 +100,7 @@ def update_grph(place):
 
     return figure
 
+
 @app.callback(Output("grph2", "figure"), Input("Dpdwn2", "value"))
 def update_grph(place):
     print()
@@ -99,6 +116,7 @@ def update_grph(place):
     }
 
     return figure
+
 
 @app.callback(Output("grph3", "figure"), Input("Dpdwn3", "value"))
 def update_grph(place):
